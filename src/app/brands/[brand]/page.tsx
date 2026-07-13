@@ -78,11 +78,17 @@ export default async function BrandPage({ params }: Props) {
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {group.items.map((p) => (
-                  <Link key={p.slug} href={`/products/${p.slug}`} className="card-elevated p-6 group">
+                  <Link key={p.slug} href={`/products/${p.slug}`} className="card-elevated p-6 group flex flex-col h-full">
+                    {p.image && (
+                      <div className="mb-4 aspect-[4/3] rounded-lg bg-surface/50 p-4 flex items-center justify-center">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={p.image} alt={p.name} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                      </div>
+                    )}
                     <div className="text-xs uppercase tracking-wider text-primary font-semibold">{p.category}</div>
                     <h4 className="mt-2 text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{p.name}</h4>
                     <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.short}</p>
-                    <div className="mt-5 pt-4 border-t border-border flex items-center justify-end">
+                    <div className="mt-auto pt-4 border-t border-border flex items-center justify-end">
                       <ArrowRight size={16} className="text-primary group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Link>

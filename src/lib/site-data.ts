@@ -44,6 +44,7 @@ export type ProductSpec = {
   description: string;
   features: string[];
   columns: { key: keyof PriceRow; label: string }[];
+  image: string;
   variants: { title: string; rows: PriceRow[] }[];
 };
 
@@ -59,6 +60,7 @@ export const products: ProductSpec[] = [
   // ============= KING ROAR =============
   {
     slug: "upvc-ball-valve",
+    image: "/images/products/upvc-ball-valve.png",
     brand: "king-roar",
     category: "Ball Valves",
     name: "KingRoar uPVC Ball Valve",
@@ -106,6 +108,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "cpvc-ball-valve",
+    image: "/images/products/cpvc-ball-valve.png",
     brand: "king-roar",
     category: "Ball Valves",
     name: "KingRoar cPVC Ball Valve",
@@ -141,6 +144,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "king-roar-concealed-valve-a-type",
+    image: "/images/products/king-roar-concealed-valve-a-type.png",
     brand: "king-roar",
     category: "Concealed Valves",
     name: "uPVC / cPVC Concealed Valve A-Type",
@@ -173,6 +177,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "pp-taps-regular-classic",
+    image: "/images/products/pp-taps-regular-classic.png",
     brand: "king-roar",
     category: "Bathroom Taps",
     name: "PP & PC Crystal Bib Taps",
@@ -207,6 +212,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "abs-showers",
+    image: "/images/products/abs-showers.png",
     brand: "king-roar",
     category: "Bathware",
     name: "KingRoar ABS Shower Heads",
@@ -240,6 +246,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "cp-extension-nipples",
+    image: "/images/products/cp-extension-nipples.png",
     brand: "king-roar",
     category: "CP Fittings",
     name: "C.P. Extension Nipples — Special",
@@ -275,6 +282,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "rcc-nail-clamps",
+    image: "/images/products/rcc-nail-clamps.png",
     brand: "king-roar",
     category: "Pipe Clamps",
     name: "uPVC / cPVC RCC Nail Clamps",
@@ -315,6 +323,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "metal-clamps",
+    image: "/images/products/metal-clamps.png",
     brand: "king-roar",
     category: "Pipe Clamps",
     name: "Powder-Coated Metal Clamps — 1 mm & 1.5 mm",
@@ -363,6 +372,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "ss-202-clamps",
+    image: "/images/products/ss-202-clamps.png",
     brand: "king-roar",
     category: "Pipe Clamps",
     name: "S.S. 202 Clamps",
@@ -410,6 +420,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "gi-clamps",
+    image: "/images/products/gi-clamps.png",
     brand: "king-roar",
     category: "Pipe Clamps",
     name: "GI Clamps — Golden & Silver",
@@ -462,6 +473,7 @@ export const products: ProductSpec[] = [
   // ============= DEVAM =============
   {
     slug: "devam-concealed-valve",
+    image: "/images/products/devam-concealed-valve.png",
     brand: "devam",
     category: "Concealed Valves",
     name: "Devam uPVC / cPVC Concealed Valve — Regular Model",
@@ -495,6 +507,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "devam-nrv-valve",
+    image: "/images/products/devam-nrv-valve.png",
     brand: "devam",
     category: "NRV Valves",
     name: "Devam uPVC / cPVC Non-Return Valve (NRV)",
@@ -527,6 +540,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "cpvc-3in1-wall-mixer-adapter",
+    image: "/images/products/cpvc-3in1-wall-mixer-adapter.png",
     brand: "devam",
     category: "Adapters",
     name: "cPVC 3-in-1 Wall Mixer Adapter",
@@ -550,6 +564,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "ptmt-connection-pipe",
+    image: "/images/products/ptmt-connection-pipe.png",
     brand: "devam",
     category: "Connection Pipes",
     name: "Devam PTMT Connection Pipe",
@@ -582,6 +597,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "solvent-cement",
+    image: "/images/products/solvent-cement.png",
     brand: "devam",
     category: "Solvent Cement",
     name: "PVC / uPVC / cPVC Solvent Cement",
@@ -615,6 +631,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "sink-waste-pipe",
+    image: "/images/products/sink-waste-pipe.png",
     brand: "devam",
     category: "Waste Pipes",
     name: "PVC Sink & Wash Basin Waste Pipe",
@@ -646,6 +663,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "waste-coupling",
+    image: "/images/products/waste-coupling.png",
     brand: "devam",
     category: "Couplings",
     name: "PVC & SS Waste & Sink Couplings",
@@ -679,6 +697,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "soap-dishes-holders",
+    image: "/images/products/soap-dishes-holders.png",
     brand: "devam",
     category: "Bathroom Accessories",
     name: "PP Soap Dishes, Tumbler Holders & Towel Ring",
@@ -712,6 +731,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "plastic-showers",
+    image: "/images/products/plastic-showers.png",
     brand: "devam",
     category: "Bathware",
     name: "PP Square, Slim, Fan Showers",
@@ -738,6 +758,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "nahani-trap",
+    image: "/images/products/nahani-trap.png",
     brand: "devam",
     category: "Drainage",
     name: "PVC Small Trap (Nahani Trap)",
@@ -762,6 +783,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "garden-jointer-hose",
+    image: "/images/products/garden-jointer-hose.png",
     brand: "devam",
     category: "Garden Products",
     name: "Garden Pipe Jointer, Hose Connector & Coller",
@@ -814,6 +836,7 @@ export const products: ProductSpec[] = [
   },
   {
     slug: "pvc-bore-cap",
+    image: "/images/products/pvc-bore-cap.png",
     brand: "devam",
     category: "Bore Fittings",
     name: "PVC Bore Cap",

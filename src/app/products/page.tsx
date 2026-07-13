@@ -46,7 +46,13 @@ export default function ProductsPage() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((p) => (
-            <Link key={p.slug} href={`/products/${p.slug}`} className="card-elevated p-6 group">
+            <Link key={p.slug} href={`/products/${p.slug}`} className="card-elevated p-6 group flex flex-col h-full">
+              {p.image && (
+                <div className="mb-4 aspect-[4/3] rounded-lg bg-surface/50 p-4 flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.image} alt={p.name} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <span className="text-xs uppercase tracking-wider text-primary font-semibold">{p.category}</span>
                 <span className="text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full bg-surface border border-border text-muted-foreground">
@@ -55,7 +61,7 @@ export default function ProductsPage() {
               </div>
               <h3 className="mt-3 text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{p.name}</h3>
               <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.short}</p>
-              <div className="mt-5 pt-4 border-t border-border flex items-center justify-between">
+              <div className="mt-auto pt-4 border-t border-border flex items-center justify-between">
                 <span className="text-xs text-muted-foreground">{p.variants.reduce((n, v) => n + v.rows.length, 0)} SKUs</span>
                 <ArrowRight size={16} className="text-primary group-hover:translate-x-1 transition-transform" />
               </div>

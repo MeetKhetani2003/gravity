@@ -71,6 +71,12 @@ export default async function ProductPage({ params }: Props) {
       <Section bg="white">
         <div className="grid lg:grid-cols-[1.4fr_1fr] gap-12">
           <div>
+            {p.image && (
+              <div className="mb-8 rounded-2xl overflow-hidden border border-border bg-surface flex items-center justify-center p-8 aspect-video md:aspect-[2/1]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.image} alt={p.name} className="max-w-full max-h-full object-contain" />
+              </div>
+            )}
             <h2 className="text-2xl md:text-3xl font-semibold">Overview</h2>
             <p className="mt-4 text-lg text-muted-foreground leading-relaxed">{p.description}</p>
 
@@ -151,7 +157,13 @@ export default async function ProductPage({ params }: Props) {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {related.map((r) => (
-              <Link key={r.slug} href={`/products/${r.slug}`} className="card-elevated p-6 group">
+              <Link key={r.slug} href={`/products/${r.slug}`} className="card-elevated p-6 group flex flex-col h-full">
+                {r.image && (
+                  <div className="mb-4 aspect-[4/3] rounded-lg bg-surface/50 p-4 flex items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={r.image} alt={r.name} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                )}
                 <div className="text-xs uppercase tracking-wider text-primary font-semibold">{r.category}</div>
                 <h4 className="mt-2 text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{r.name}</h4>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{r.short}</p>

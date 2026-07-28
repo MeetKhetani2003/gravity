@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShieldCheck, Lock, User, Eye, EyeOff, ArrowRight, AlertCircle, Sparkles, Key } from "lucide-react";
+import { ShieldCheck, Lock, User, Eye, EyeOff, ArrowRight, AlertCircle } from "lucide-react";
 import logo from "@/assets/gravity-logo.png";
 import { useAdminAuth } from "@/lib/admin-auth";
 import { toast } from "sonner";
@@ -74,12 +74,12 @@ export default function AdminLoginPage() {
 
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-300">
             <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-            <span>Environment Protected Area</span>
+            <span>Protected Admin Area</span>
           </div>
 
-          <h1 className="text-2xl font-black text-white tracking-tight">Admin Products Console</h1>
+          <h1 className="text-2xl font-black text-white tracking-tight">Admin Console Sign In</h1>
           <p className="text-xs text-slate-400">
-            Sign in with your configured environment admin credentials.
+            Enter your admin credentials to manage products.
           </p>
         </div>
 
@@ -104,7 +104,7 @@ export default function AdminLoginPage() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="e.g. admin"
+                placeholder="Enter username"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-mono"
               />
             </div>
@@ -150,25 +150,8 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        {/* Credentials Info Box */}
-        <div className="p-3.5 rounded-xl bg-slate-950/50 border border-slate-800/80 space-y-1.5 text-xs text-slate-400">
-          <div className="flex items-center gap-1.5 font-bold text-slate-300">
-            <Key className="w-3.5 h-3.5 text-amber-400" />
-            <span>Configured Environment Credentials</span>
-          </div>
-          <p className="text-[11px] text-slate-400 font-mono">
-            Username: <strong className="text-white">admin</strong>
-          </p>
-          <p className="text-[11px] text-slate-400 font-mono">
-            Password: <strong className="text-white">gravity123</strong>
-          </p>
-          <p className="text-[10px] text-slate-500 pt-1 border-t border-slate-800">
-            You can change these anytime in <code className="text-amber-400 font-mono">.env.local</code>.
-          </p>
-        </div>
-
         {/* Return to Live Site */}
-        <div className="text-center pt-2">
+        <div className="text-center pt-2 border-t border-slate-800/80">
           <Link
             href="/products"
             className="text-xs text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1"

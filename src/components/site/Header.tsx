@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ShieldCheck } from "lucide-react";
 import logo from "@/assets/gravity-logo.png";
 
 const nav = [
@@ -29,6 +29,10 @@ export function Header() {
   }, []);
 
   useEffect(() => { setOpen(false); }, [pathname]);
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const isHome = pathname === "/";
   const transparent = isHome && !scrolled;
@@ -57,8 +61,8 @@ export function Header() {
                 className={[
                   "px-3.5 py-2 text-sm font-medium rounded-md transition-colors",
                   transparent ? "text-white/90 hover:text-white" : "text-foreground hover:text-primary",
-                  active && !transparent ? "text-primary" : "",
-                  active && transparent ? "text-white" : "",
+                  active && !transparent ? "text-primary font-semibold" : "",
+                  active && transparent ? "text-white font-semibold" : "",
                 ].join(" ")}
               >
                 {item.label}
@@ -68,6 +72,19 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
+          <Link
+            href="/admin"
+            className={[
+              "px-3 py-1.5 text-xs font-bold rounded-lg border transition-all flex items-center gap-1.5",
+              transparent
+                ? "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                : "bg-slate-900 text-white border-slate-800 hover:bg-slate-800",
+            ].join(" ")}
+            title="Products Admin Panel"
+          >
+            <ShieldCheck size={14} className="text-primary" />
+            <span>Admin</span>
+          </Link>
           <Link href="/contact" className="btn-primary text-sm py-2.5 px-5">
             Dealer Inquiry
           </Link>
@@ -95,6 +112,15 @@ export function Header() {
                 <ChevronDown size={16} className="-rotate-90 text-muted-foreground" />
               </Link>
             ))}
+            <Link
+              href="/admin"
+              className="py-3 text-primary font-bold border-b border-border/60 flex items-center justify-between"
+            >
+              <span className="flex items-center gap-2">
+                <ShieldCheck size={16} /> Admin Panel
+              </span>
+              <ChevronDown size={16} className="-rotate-90 text-primary" />
+            </Link>
             <Link href="/contact" className="btn-primary mt-4">Dealer Inquiry</Link>
           </div>
         </div>

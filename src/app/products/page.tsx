@@ -5,9 +5,11 @@ import { ArrowRight, Filter } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/Section";
 import { CTASection } from "@/components/site/CTASection";
-import { products, brands } from "@/lib/site-data";
+import { brands } from "@/lib/site-data";
+import { useProductsStore } from "@/lib/products-store";
 
 export default function ProductsPage() {
+  const { products } = useProductsStore();
   const [brandFilter, setBrandFilter] = useState<"all" | "king-roar" | "devam">("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
 
@@ -56,7 +58,7 @@ export default function ProductsPage() {
               <div className="flex items-center justify-between">
                 <span className="text-xs uppercase tracking-wider text-primary font-semibold">{p.category}</span>
                 <span className="text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full bg-surface border border-border text-muted-foreground">
-                  {brands[p.brand].name}
+                  {brands[p.brand]?.name || p.brand}
                 </span>
               </div>
               <h3 className="mt-3 text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{p.name}</h3>

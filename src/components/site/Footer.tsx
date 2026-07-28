@@ -1,9 +1,18 @@
+"use client";
+
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Mail, Phone, MapPin, ShieldCheck } from "lucide-react";
 import logo from "@/assets/gravity-logo.png";
 import { company } from "@/lib/site-data";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <footer className="bg-[oklch(0.16_0.02_260)] text-white/80 mt-24">
       <div className="container-page py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-12">
@@ -26,7 +35,7 @@ export function Footer() {
         <FooterCol title="Company" links={[["About","/about"],["Quality","/quality"],["Contact","/contact"]]} />
         <FooterCol title="Brands" links={[["King Roar","/brands/king-roar"],["Devam","/brands/devam"],["All Brands","/brands"]]} />
         <FooterCol title="Products" links={[["All Products","/products"],["Applications","/applications"],["Downloads","/downloads"]]} />
-        <FooterCol title="Resources" links={[["Catalogue","/downloads"],["Price List","/downloads"],["Dealer Inquiry","/contact"]]} />
+        <FooterCol title="Resources" links={[["Catalogue","/downloads"],["Price List","/downloads"],["Dealer Inquiry","/contact"],["Admin Console","/admin"]]} />
       </div>
       <div className="border-t border-white/10">
         <div className="container-page py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50">

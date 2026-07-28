@@ -50,3 +50,9 @@ export async function getProductsCollection() {
   const db = await getDatabase();
   return db.collection<ProductSpec>("products");
 }
+
+export async function getCategoriesCollection() {
+  const db = await getDatabase();
+  return db.collection<{ name: string; createdAt?: Date }>("categories");
+}
+

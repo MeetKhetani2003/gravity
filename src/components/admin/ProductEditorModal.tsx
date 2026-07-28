@@ -15,7 +15,7 @@ export function ProductEditorModal({
   onClose: () => void;
   editingProduct?: ProductSpec | null;
 }) {
-  const { addProduct, updateProduct, allCategories } = useProductsStore();
+  const { addProduct, updateProduct, allCategories, addCategory } = useProductsStore();
   const [activeTab, setActiveTab] = useState<"general" | "features" | "variants">("general");
 
   // Form State
@@ -182,7 +182,7 @@ export function ProductEditorModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const finalCategory = category === "CUSTOM" ? customCategory : category;
+    const finalCategory = category === "CUSTOM" ? customCategory.trim() : category.trim();
 
     if (!name.trim()) {
       toast.error("Product name is required.");
@@ -192,10 +192,15 @@ export function ProductEditorModal({
       toast.error("Product slug is required.");
       return;
     }
-    if (!finalCategory.trim()) {
+    if (!finalCategory) {
       toast.error("Product category is required.");
       return;
     }
+
+    if (category === "CUSTOM" && customCategory.trim()) {
+      await addCategory(customCategory.trim());
+    }
+
 
     const productPayload: ProductSpec = {
       slug: slug.trim(),

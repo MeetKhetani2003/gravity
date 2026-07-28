@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Plus, Trash2, Check, HelpCircle, Layers, Table, Sparkles, Image as ImageIcon } from "lucide-react";
+import { X, Plus, Trash2, Check, HelpCircle, Layers, Table, Sparkles, Image as ImageIcon, Upload, Loader2 } from "lucide-react";
 import { ProductSpec, PriceRow } from "@/lib/site-data";
 import { useProductsStore } from "@/lib/products-store";
 import { toast } from "sonner";
@@ -27,6 +27,7 @@ export function ProductEditorModal({
   const [shortDesc, setShortDesc] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   // Features
   const [features, setFeatures] = useState<string[]>([]);
@@ -90,6 +91,34 @@ export function ProductEditorModal({
     }
   };
 
+  const handleImageFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/images/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok && data.url) {
+        setImage(data.url);
+        toast.success("Image uploaded to GridFS successfully!");
+      } else {
+        toast.error(data.message || "Failed to upload image.");
+      }
+    } catch (err) {
+      toast.error("Error uploading image to GridFS.");
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
+
   const handleAddFeature = () => {
     if (newFeatureText.trim()) {
       setFeatures([...features, newFeatureText.trim()]);
@@ -150,7 +179,7 @@ export function ProductEditorModal({
     setVariants(updated);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const finalCategory = category === "CUSTOM" ? customCategory : category;
@@ -189,11 +218,11 @@ export function ProductEditorModal({
     };
 
     if (editingProduct) {
-      updateProduct(editingProduct.slug, productPayload);
-      toast.success(`Product "${name}" updated successfully!`);
+      await updateProduct(editingProduct.slug, productPayload);
+      toast.success(`Product "${name}" saved to MongoDB!`);
     } else {
-      addProduct(productPayload);
-      toast.success(`Product "${name}" created successfully!`);
+      await addProduct(productPayload);
+      toast.success(`Product "${name}" saved to MongoDB!`);
     }
 
     onClose();
@@ -382,22 +411,48 @@ export function ProductEditorModal({
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                  Product Image URL
+                  Product Image (GridFS & URL)
                 </label>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    placeholder="/images/products/upvc-ball-valve.jpg"
-                    className="flex-1 px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-lg focus:bg-white focus:border-primary focus:outline-none font-mono"
-                  />
-                  {image && (
-                    <div className="w-10 h-10 rounded-lg border border-slate-200 bg-slate-50 p-1 flex items-center justify-center shrink-0">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={image} alt="Preview" className="max-w-full max-h-full object-contain" />
+                <div className="space-y-3">
+                  <div className="flex gap-3 items-center">
+                    <input
+                      type="text"
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                      placeholder="/api/images/upvc-ball-valve.jpg"
+                      className="flex-1 px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-lg focus:bg-white focus:border-primary focus:outline-none font-mono"
+                    />
+                    {image && (
+                      <div className="w-10 h-10 rounded-lg border border-slate-200 bg-slate-50 p-1 flex items-center justify-center shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={image} alt="Preview" className="max-w-full max-h-full object-contain" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* GridFS File Uploader */}
+                  <div className="p-3.5 rounded-xl border border-dashed border-slate-300 bg-slate-50 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                        {isUploadingImage ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-slate-800">Upload Image to GridFS</p>
+                        <p className="text-[11px] text-slate-500">Select file from device to upload into MongoDB GridFS bucket</p>
+                      </div>
                     </div>
-                  )}
+
+                    <label className="px-3.5 py-1.5 bg-primary text-white text-xs font-bold rounded-lg cursor-pointer hover:bg-primary/90 transition-all shrink-0">
+                      <span>{isUploadingImage ? "Uploading..." : "Browse File"}</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        disabled={isUploadingImage}
+                        onChange={handleImageFileUpload}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -624,7 +679,7 @@ export function ProductEditorModal({
               className="px-6 py-2.5 text-xs font-bold text-white bg-primary hover:bg-primary/90 rounded-xl shadow-md transition-all flex items-center gap-2"
             >
               <Check className="w-4 h-4" />
-              <span>{editingProduct ? "Save Product Changes" : "Create Product"}</span>
+              <span>{editingProduct ? "Save to MongoDB" : "Create in MongoDB"}</span>
             </button>
           </div>
         </form>

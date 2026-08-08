@@ -91,8 +91,8 @@ export default function AdminProductsPage() {
           valA = a.category.toLowerCase();
           valB = b.category.toLowerCase();
         } else if (sortField === "skus") {
-          valA = a.variants.reduce((n, v) => n + v.rows.length, 0);
-          valB = b.variants.reduce((n, v) => n + v.rows.length, 0);
+          valA = (a.variants || []).reduce((n, v) => n + (v.rows?.length || 0), 0);
+          valB = (b.variants || []).reduce((n, v) => n + (v.rows?.length || 0), 0);
         }
 
         if (valA < valB) return sortDirection === "asc" ? -1 : 1;
@@ -306,7 +306,7 @@ export default function AdminProductsPage() {
               <tbody className="divide-y divide-slate-100">
                 {paginatedProducts.map((product) => {
                   const isSelected = selectedSlugs.includes(product.slug);
-                  const totalSkuCount = product.variants.reduce((n, v) => n + v.rows.length, 0);
+                  const totalSkuCount = (product.variants || []).reduce((n, v) => n + (v.rows?.length || 0), 0);
 
                   return (
                     <tr
@@ -373,7 +373,7 @@ export default function AdminProductsPage() {
                             {totalSkuCount} SKUs
                           </span>
                           <span className="text-[10px] text-slate-400 block">
-                            {product.variants.length} Variant Group{product.variants.length > 1 ? "s" : ""}
+                            {(product.variants || []).length} Variant Group{(!product.variants || product.variants.length !== 1) ? "s" : ""}
                           </span>
                         </div>
                       </td>

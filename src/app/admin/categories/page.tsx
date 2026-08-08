@@ -243,7 +243,7 @@ export default function AdminCategoriesPage() {
             {allCategories.map((cat) => {
               const catProducts = products.filter((p) => p.category === cat);
               const skuCount = catProducts.reduce(
-                (n, p) => n + p.variants.reduce((vn, v) => vn + v.rows.length, 0),
+                (n, p) => n + (p.variants || []).reduce((vn, v) => vn + (v.rows?.length || 0), 0),
                 0
               );
               const kingRoarCount = catProducts.filter((p) => p.brand === "king-roar").length;

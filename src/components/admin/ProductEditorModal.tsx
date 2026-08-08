@@ -289,7 +289,7 @@ export function ProductEditorModal({
             }`}
           >
             <Table className="w-3.5 h-3.5" />
-            <span>3. Variants & Prices ({variants.reduce((n, v) => n + v.rows.length, 0)} SKUs)</span>
+            <span>3. Variants & Prices ({variants.reduce((n, v) => n + (v.rows?.length || 0), 0)} SKUs)</span>
           </button>
         </div>
 

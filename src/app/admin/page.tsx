@@ -31,7 +31,7 @@ export default function AdminDashboardPage() {
   // Compute metrics
   const totalProducts = products.length;
   const totalSKUs = products.reduce(
-    (acc, p) => acc + p.variants.reduce((vAcc, v) => vAcc + v.rows.length, 0),
+    (acc, p) => acc + (p.variants || []).reduce((vAcc, v) => vAcc + (v.rows?.length || 0), 0),
     0
   );
   const kingRoarCount = products.filter((p) => p.brand === "king-roar").length;
@@ -41,7 +41,7 @@ export default function AdminDashboardPage() {
   const categoryStats = allCategories.map((cat) => {
     const catProducts = products.filter((p) => p.category === cat);
     const catSkus = catProducts.reduce(
-      (acc, p) => acc + p.variants.reduce((vAcc, v) => vAcc + v.rows.length, 0),
+      (acc, p) => acc + (p.variants || []).reduce((vAcc, v) => vAcc + (v.rows?.length || 0), 0),
       0
     );
     return {
@@ -259,7 +259,7 @@ export default function AdminDashboardPage() {
 
                 <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
                   <span className="text-slate-400 font-mono">
-                    {product.variants.reduce((n, v) => n + v.rows.length, 0)} SKUs
+                    {(product.variants || []).reduce((n, v) => n + (v.rows?.length || 0), 0)} SKUs
                   </span>
 
                   <div className="flex items-center gap-2">

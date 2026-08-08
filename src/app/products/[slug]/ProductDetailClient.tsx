@@ -86,8 +86,8 @@ export function ProductDetailClient({ slug }: { slug: string }) {
             <div className="mt-5 space-y-4 text-sm">
               <Fact k="Brand" v={brand.name} />
               <Fact k="Category" v={p.category} />
-              <Fact k="Variants" v={String(p.variants.length)} />
-              <Fact k="Total SKUs" v={String(p.variants.reduce((n, v) => n + v.rows.length, 0))} />
+              <Fact k="Variants" v={String((p.variants || []).length)} />
+              <Fact k="Total SKUs" v={String((p.variants || []).reduce((n, v) => n + (v.rows?.length || 0), 0))} />
               <Fact k="Certification" v="ISO 9001:2015" />
               <Fact k="Made in" v="Rajkot, India" />
             </div>
@@ -113,7 +113,7 @@ export function ProductDetailClient({ slug }: { slug: string }) {
           subtitle="Prices ex-factory Rajkot as of July 2024. Dealer margins on request."
         />
         <div className="space-y-10">
-          {p.variants.map((v) => (
+          {(p.variants || []).map((v) => (
             <div key={v.title}>
               <h3 className="text-xl font-semibold mb-4">{v.title}</h3>
               <div className="overflow-x-auto rounded-xl border border-border bg-background">
